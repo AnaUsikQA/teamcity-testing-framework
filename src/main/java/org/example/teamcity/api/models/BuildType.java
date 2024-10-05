@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class BuildType extends BaseModel {
     private String id;
     private String name;
-    private Project profect;
+    private Project project;
     private Steps steps;
 }
