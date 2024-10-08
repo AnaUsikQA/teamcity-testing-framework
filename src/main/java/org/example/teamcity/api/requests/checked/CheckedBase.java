@@ -1,9 +1,12 @@
 package org.example.teamcity.api.requests.checked;
 
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 import org.example.teamcity.api.enums.Endpoint;
+import org.example.teamcity.api.generators.TestDataStorage;
 import org.example.teamcity.api.models.BaseModel;
+import org.example.teamcity.api.models.User;
 import org.example.teamcity.api.requests.CrudInterface;
 import org.example.teamcity.api.requests.Request;
 import org.example.teamcity.api.requests.unchecked.UncheckedBase;
@@ -16,12 +19,16 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
         this.uncheckedBase = new UncheckedBase(spec, endpoint);
     }
 
+
     @Override
     public T create(BaseModel model) {
-        return (T) uncheckedBase
+        var createdModel = (T) uncheckedBase
                 .create(model)
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(endpoint.getModelClass());
+
+        TestDataStorage.getStorage().addCreatedEntity(endpoint, createdModel);
+        return createdModel;
     }
 
     @Override
@@ -47,4 +54,6 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().asString();
     }
+
+
 }
