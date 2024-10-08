@@ -98,7 +98,7 @@ public class BuildTypeTest extends BaseApiTest {
         new UncheckedBase(Specifications.authSpec(user2), BUILD_TYPES)
                 .create(buildTypeForProject1)
                 .then().assertThat().statusCode(HttpStatus.SC_FORBIDDEN)
-                .body(Matchers.containsString("Access denied. Check the user has enough permissions to perform the operation."));
+                .body(Matchers.containsString("You do not have enough permissions to edit project with id: %s".formatted(testData.getProject().getId())));
 
     }
 }
