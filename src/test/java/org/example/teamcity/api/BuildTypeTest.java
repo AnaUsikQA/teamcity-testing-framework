@@ -90,9 +90,8 @@ public class BuildTypeTest extends BaseApiTest {
         user2.setRoles(generate(Roles.class, "PROJECT_ADMIN", "p:" + project2.getId()));
         superUserCheckedRequests.<User>getRequest(USERS).create(user2);
 
-        // Шаг 5: Пытаемся создать buildType для project1 (проект user1) от имени user2
+        // Шаг 5: Подготовка данных для 6 шага, привязка билдтайпа1 к проджекту1
         var buildTypeForProject1 = generate(Arrays.asList(testData.getProject()), BuildType.class);
-        buildTypeForProject1.setProjectId(testData.getProject().getId());
 
         // Шаг 6: Выполняем запрос на создание и проверяем, что он завершится ошибкой доступа
         new UncheckedBase(Specifications.authSpec(user2), BUILD_TYPES)
