@@ -1,12 +1,27 @@
+POST http://localhost:80/api/item
+Content-Type: application/json
+
+{}
+
 ### Constants
-@host = 192.168.1.105
+@host = 192.168.1.110
 @user= admin
 @password = admin
 
-### Generated test data
-@projectId = {{$random.alphabetic(10)}}
-@buildTypeId = {{$random.alphabetic(10)}}
+### Hardcoded test data
+@projectId = test_project_1
+@buildTypeId = test_build_type_1
 
+###
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=Aqua
+
+###
+
+### Get all projects
+GET http://admin:admin@192.168.1.110:8111/app/rest/projects/name:test_MLUIocERUp
+Accept: application/json
 
 ### 1. Create project
 # @no-cookie-jar
@@ -22,7 +37,6 @@ Accept: application/json
   "id": "{{projectId}}",
   "copyAllAssociatedSettings": true
 }
-
 
 ### 2. Create build configuration
 # @no-cookie-jar
@@ -73,7 +87,3 @@ Accept: application/json
     "id": "{{buildTypeId}}"
   }
 }
-
-### Get all projects
-GET http://{{user}}:{{password}}@{{host}}:8111/app/rest/projects/
-Accept: application/json
